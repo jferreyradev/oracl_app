@@ -1,18 +1,16 @@
 const database = require('../services/database.js');
-const users = require('../config/entities').users;
+const entities = require('../config/entities.js').entities;
 
 async function find(context) {
 
-    const baseQuery = users['findone'];
-    console.log(baseQuery);
+    const baseQuery = entities[context.entity];
 
-    let query = baseQuery;
+    let query = baseQuery[context.sentence];
+
     const binds = {};
 
     if (context.id) {
         binds.id = context.id;
-
-        //query += `\nwhere id = :user_id`;
     }
 
     const result = await database.simpleExecute(query, binds);
