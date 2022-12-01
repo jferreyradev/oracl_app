@@ -3,7 +3,7 @@ const dbConfig = require('../config/database.js');
 
 if (process.platform === 'win32') {
     // Windows
-    oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_19_6' });
+    oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_21_6' });
 } else if (process.platform === 'darwin' || process.platform === 'linux' ) {
     // macOS and linux
     oracledb.initOracleClient({ libDir: process.env.HOME + '/bin/instantclient_21_8' });
@@ -28,6 +28,10 @@ function simpleExecute(statement, binds = [], opts = {}) {
 
         try {
             conn = await oracledb.getConnection();
+
+            console.log(statement)
+            console.log(binds)
+            console.log(opts)
 
             const result = await conn.execute(statement, binds, opts);
 
