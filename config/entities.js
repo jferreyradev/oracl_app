@@ -1,15 +1,35 @@
 module.exports.entities = {
-    users: {
-        findone: 'select * from usuario.usuariosapp where id = :id',
-        getall: 'select * from usuario.usuariosapp',
-        create: '',
-        //update: 'update usuario.usuariosapp set :field = :value where id = :id',
-        delete: 'delete usuario.usuariosapp where id = :id',
-    }
-}
-
-
-module.exports.entities = {
+    tipoPresupuesto:{
+        table:'TIPO_PRESUP',
+        fields:{
+            id:'IDTIPOPRE',
+            descripcion:'DESCRIPCION'
+        },
+        key: { field: "id" }
+    },
+    cabPresupuesto:{
+        table:'CAB_PRESUP_ANUAL',
+        fields:{
+            id:'IDCABPRE',
+            descripcion:'DESCRIPCION',
+            anio:'ANIO'
+        },
+        key: { field: "id" }
+    },
+    detPresupuesto:{
+        table:'DET_PRESUP_ANUAL',
+        fields:{
+            idcab:'IDCABPRE',
+            id: 'IDDETPRE',
+            iddet:'IDDETALLE',
+            cuenta:'CUENTA',
+            descripcion:'DESCRIPCION',
+            hijo:'HIJO',
+            monto:'MONTO',
+            saldo:'SALDO'
+        },
+        key: { field: "id" }
+    },
     hoja: {
         table: 'hoja_nov',
         fields: {

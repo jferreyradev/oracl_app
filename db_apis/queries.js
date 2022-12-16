@@ -81,13 +81,11 @@ function getWhere(entity, context) {
     let [key, text] = context.search.split(":");
 
     if (firstWhere) {
-      query += ` \nwhere lower(${
-        entity.fields[key]
-      }) like '%${text.toLowerCase()}%' `;
+      query += ` \nwhere lower(${entity.fields[key]
+        }) like '%${text.toLowerCase()}%' `;
     } else {
-      query += `\nand lower(${
-        entity.fields[key]
-      }) like '%${text.toLowerCase()}%' `;
+      query += `\nand lower(${entity.fields[key]
+        }) like '%${text.toLowerCase()}%' `;
     }
   }
 
@@ -215,18 +213,23 @@ function getSQLdelete(entity, context) {
 }
 
 async function find(context) {
-    console.log('--------------')
+  console.log('--------------')
   console.log(context.query);
 
   let query = getSelect(context.entityobj);
-  let queryWhere = getWhere(context.entityobj, context.query);
 
-  let fullQuery = query + queryWhere.where;
+  if (context.query) {
+    let queryWhere = getWhere(context.entityobj, context.query);
+    query = query + queryWhere.where;
+    console.log(query);
 
-  console.log(fullQuery);
+    const result = await db.simpleExecute(query, queryWhere.binds);
+    return result;
 
-  const result = await db.simpleExecute(fullQuery, queryWhere.binds);
+  }
 
+  console.log(query);
+  const result = await db.simpleExecute(query);
   return result;
 
   //return result.rows;
