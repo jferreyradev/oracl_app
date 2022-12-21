@@ -18,16 +18,17 @@ async function select(req, res, next) {
 
     let result;
 
-    console.log(context);
-    console.log(entities[context.entity]);
+    //console.log(context);
+    //console.log(entities[context.entity]);
 
     if (entities[context.entity]) {
 
       result = await queries.find(context);
 
-      console.log(entities[context.entity], req.query);
+      //console.log(entities[context.entity], req.query);
 
       if (result.rows.length > 0) {
+        console.log(result.rows)
         res.status(200).json(result.rows);
       } else {
         res.status(404).end();
@@ -46,7 +47,7 @@ async function update(req, res, next) {
 
         const context = {};
 
-        context.id = Number(req.params.id);
+        context.body = req.body;
         context.entity = req.params.entity;
         context.entityobj = entities[context.entity];
         context.query = req.query;
@@ -54,15 +55,13 @@ async function update(req, res, next) {
       let result;
   
       console.log(context);
-      console.log(entities[context.entity]);
+      //console.log(entities[context.entity]);
   
       if (entities[context.entity]) {
         result = await queries.modify(
           context.entityobj,
-          req.query
-        );
-  
-        console.log(context.entityobj, context.query);
+          context
+        );  
   
         if (result.rows.length > 0) {
           res.status(200).json(result.rows);

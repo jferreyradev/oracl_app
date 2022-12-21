@@ -10,10 +10,10 @@ function getSelect(entity, parentEntity) {
       sqlCab += ", ";
     }
     if (typeof entity.fields[key] != "object") {
-      sqlCab += entity.fields[key] + " as " + key;
+      sqlCab += entity.fields[key] + " as \"" + key + "\"";
     } else {
       sqlCab +=
-        "(" + getSQLcomplexSelect(entity.fields[key], entity) + ") as " + key;
+        "(" + getSQLcomplexSelect(entity.fields[key], entity) + ") as \"" + key + "\"";
     }
   }
   sqlCab += "\nFROM " + entity.table;
@@ -171,12 +171,12 @@ function getSQLupdate(entity, context) {
   let sqlCab = "UPDATE " + entity.table;
   let first = true;
 
-  //console.log(context);
+  console.log(context);
 
   for (const key in entity.fields) {
     if (
       typeof entity.fields[key] != "object" &&
-      key in context &&
+      key in context.body &&
       key != entity["key"].field
     ) {
       if (first) {
@@ -221,14 +221,14 @@ async function find(context) {
   if (context.query) {
     let queryWhere = getWhere(context.entityobj, context.query);
     query = query + queryWhere.where;
-    console.log(query);
+    //console.log(query);
 
     const result = await db.simpleExecute(query, queryWhere.binds);
     return result;
 
   }
 
-  console.log(query);
+  //console.log(query);
   const result = await db.simpleExecute(query);
   return result;
 
@@ -287,7 +287,7 @@ async function remove(entity, context) {
 
     if (binds[entity["key"].field]) {
       console.log(query);
-      let result = await database.simpleExecute(query, binds);
+      let result = await db.simpleExecute(query, binds);
       let json = { result: result, status: 200, rows: [] };
       return json;
     } else {
@@ -305,19 +305,18 @@ module.exports.remove = remove;
 async function modify(entity, context) {
   let query = getSQLupdate(entity, context);
 
-
   const binds = {};
 
-  for (const key in context) {
+  for (const key in context.body) {
     if (typeof entity.fields[key] != "object") {
-      binds[key] = context[key];
+      binds[key] = context.body[key];
     }
   }
 
   console.log(query, binds)
 
   if (binds[entity["key"].field]) {
-    let result = await database.simpleExecute(query, binds);
+    let result = await db.simpleExecute(query, binds);
     let json = { result: result, status: 200, rows: [] };
     return json;
   } else {

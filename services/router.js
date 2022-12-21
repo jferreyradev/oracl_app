@@ -3,10 +3,15 @@ const router = new express.Router();
 //const users = require('../controllers/users.js');
 //const entity = require('../controllers/entity.js');
 const queries = require("../controllers/queries.js");
+const cors = require('cors')
 
 /*
 router.use("/api", router);
 */
+//const app = express()
+
+//app.use(cors())
+router.use(cors())
 
 router.get("/", (req, res) => {
   res.end("Servidor activo");

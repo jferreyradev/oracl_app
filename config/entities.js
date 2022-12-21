@@ -11,6 +11,7 @@ module.exports.entities = {
         table:'CAB_PRESUP_ANUAL',
         fields:{
             id:'IDCABPRE',
+            idtipopre: 'IDTIPOPRE',
             descripcion:'DESCRIPCION',
             anio:'ANIO'
         },
