@@ -264,7 +264,7 @@ async function create(entity, context) {
   //console.log(binds);
 
   let result = await db.simpleExecute(query, binds);
-  let json = { result: result, status: 200, rows: [] };
+  let json = { result: result, status: 200, rows: result.rowsAffected };
   return json;
   //return result;
 }
@@ -317,7 +317,7 @@ async function modify(entity, context) {
 
   if (binds[entity["key"].field]) {
     let result = await db.simpleExecute(query, binds);
-    let json = { result: result, status: 200, rows: [] };
+    let json = { result: result, status: 200, rows: result.rowsAffected };
     return json;
   } else {
     let json = { err: "Key field is not defined", status: 400 };

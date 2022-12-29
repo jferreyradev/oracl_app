@@ -64,7 +64,8 @@ async function update(req, res, next) {
         );  
   
         if (result.rows.length > 0) {
-          res.status(200).json(result.rows);
+          console.log(result.rows)
+          res.status(200).json(result.rowsAffected);
         } else {
           res.status(404).end();
         }
@@ -96,7 +97,8 @@ async function update(req, res, next) {
         );
     
         if (result.rows.length > 0) {
-          res.status(200).json(result.rows);
+          console.log(result.rows)
+          res.status(200).json(result.rowsAffected);
         } else {
           res.status(404).end();
         }

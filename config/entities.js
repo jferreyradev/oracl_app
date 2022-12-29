@@ -13,7 +13,11 @@ module.exports.entities = {
             id:'IDCABPRE',
             idtipopre: 'IDTIPOPRE',
             descripcion:'DESCRIPCION',
-            anio:'ANIO'
+            anio:'ANIO',
+            estado: 'ESTADOPRE',
+            observacion:'OBSERVACION',
+            desde:'DESDE',
+            hasta:'HASTA'
         },
         key: { field: "id" }
     },
