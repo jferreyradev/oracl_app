@@ -3,7 +3,8 @@ const dbConfig = require('../config/database.js');
 
 if (process.platform === 'win32') {
     // Windows
-    oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_21_6' });
+    //oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_21_6' });
+    null;
 } else if (process.platform === 'darwin' || process.platform === 'linux' ) {
     // macOS and linux
     oracledb.initOracleClient({ libDir: process.env.HOME + '/bin/instantclient_21_8' });
